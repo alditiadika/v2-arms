@@ -1,0 +1,36 @@
+{
+  "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
+  "parserOptions": {
+    "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
+    "sourceType": "module", // Allows for the use of imports
+    "ecmaFeatures":{
+      "jsx":true
+    },
+    "warnOnUnsupportedTypeScriptVersion": false
+  },
+  "settings":{
+    "react":{
+      "version":"detect"
+    }
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    "plugin:react/recommended" // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+  ],
+  "rules": {
+    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+    // e.g. "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/no-namespace": "off",
+    "jsx-quotes": ["error", "prefer-single"],
+    "space-before-blocks": ["error"],
+    "object-curly-spacing": ["error", "always"],
+    "no-console": "off",
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "never"],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "max-len": ["error", { "code": 120 }]
+  }
+}
