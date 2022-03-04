@@ -8,7 +8,8 @@
     "dev": "webpack-dev-server --mode development --hot --progress --open --port 4005",
     "build": "rm -rf dist && webpack --mode production",
     "start": "node index.js",
-    "clean": "rm -rf node-modules && rm -rf package-lock.json && npm i"
+    "clean": "rm -rf node-modules && rm -rf package-lock.json && npm i",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
