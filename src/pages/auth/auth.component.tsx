@@ -14,7 +14,7 @@ const AuthComponent:React.FC<TProps> = ({ getEmployeeProfile }) => {
   const client = useApolloClient()
   const { isAuthenticated } = useSelector<IGlobalState, IAuthTypes.IAuthState>(state => state.auth)
   useEffect(() => {
-    getEmployeeProfile({client, id_badge:'A3184'})
+    getEmployeeProfile({ client, id_badge:'A3184' })
   }, [])
   return (
     <Fragment>
