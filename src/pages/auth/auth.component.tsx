@@ -10,7 +10,7 @@ type TProps = {
   setValue?:IAuthTypes.IAuthActionsSetValue,
   getEmployeeProfile:IAuthTypes.IGetEmployeeProfile
 }
-const AuthComponent:React.FC<TProps> = ({ getEmployeeProfiles }) => {
+const AuthComponent:React.FC<TProps> = ({ getEmployeeProfile }) => {
   const client = useApolloClient()
   const { isAuthenticated } = useSelector<IGlobalState, IAuthTypes.IAuthState>(state => state.auth)
   // useEffect(() => {
