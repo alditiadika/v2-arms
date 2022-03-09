@@ -10,9 +10,9 @@ import { ErrorNotFound } from 'components/templates/errors'
 const MainRoutes:React.FC = () => {
   return (
     <Fragment>
-      <RedirectDefaultPath from='/' to='/home' />
+      <RedirectDefaultPath from='/' to='/dashboard' />
       <Routes>
-        <Route path='/home/*' element={<Home/>} />    
+        <Route path='/dashboard' element={<Home/>} />    
         <Route path='*' element={<ErrorNotFound/>} />
       </Routes>
     </Fragment>

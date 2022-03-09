@@ -1,12 +1,17 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
-import serviceWorker from './sw'
-import store from 'store'
-import App from 'pages/app'
 import { ApolloProvider } from '@apollo/client'
+import { HashRouter } from 'react-router-dom'
+
+import store from 'store'
+import App from 'pages/app.component'
 import apolloClient from 'services/graphql.config'
+import serviceWorker from './sw'
+
+//import all general styles
+import 'assets/css/root.css'
+import '@progress/kendo-theme-material/dist/all.css'
 
 const Root:React.FC = () => {
   return (

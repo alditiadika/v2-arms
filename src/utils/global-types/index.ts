@@ -1,7 +1,16 @@
 /** *
   * Declare global types
 */
-
+type AddPostfix<TKey extends string, Postfix extends string> = `${TKey}${Capitalize<Postfix>}`
+type AddPrefix<TKey extends string, Prefix extends string> = `${Prefix}${Capitalize<TKey>}`
+type TypeGraphql = 'view' | 'create' | 'update' | 'count'
+type ResolveField<GQLType extends TypeGraphql, Tkey extends string> = 
+  GQLType extends 'view' ? Tkey : 
+  GQLType extends 'create' ? AddPrefix<Tkey, 'create'> :
+  GQLType extends 'update' ? AddPrefix<Tkey, 'update'> : 
+  GQLType extends 'count' ? AddPostfix<Tkey, 'connection'> :
+  Tkey
+  
 declare namespace IGlobalTypes {
   export type IDispatch<TParamAction> = (t:TParamAction) => void
   //eslint-disable-next-line
@@ -21,9 +30,9 @@ declare namespace IGlobalTypes {
     errorCode:number | string
     data:TData
   }
-  interface IGraphqlResponse<Key, TData> {
+  export interface IGraphqlResponse<GQLType extends TypeGraphql, Key extends string, TData> {
     readonly data:{
-      [Property in keyof Key]:TData
+      [k in ResolveField<GQLType, Key>]: GQLType extends 'count' ? { aggregate: { count:number } }: TData
     }
   }
 }

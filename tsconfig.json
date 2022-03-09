@@ -3,7 +3,7 @@
     "src/**/*.tsx",
     "src/**/*.ts",
     "src",
-    "./index.d.ts",
+    "./index.d.ts"
   ],
   "exclude": ["node_modules"],
   "compilerOptions": {

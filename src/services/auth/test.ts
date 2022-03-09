@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios'
-import { AuthTypes as IAuthTypes } from 'pages/auth'
+import { AuthTypes as IAuthTypes } from 'pages/login'
 import IGlobalTypes from 'utils/global-types'
 
 type TGetDataFunc = () => Promise<IGlobalTypes.IServiceResponse<IAuthTypes.ITestData[]>>

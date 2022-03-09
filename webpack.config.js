@@ -38,6 +38,11 @@ module.exports =  (_, args) => {
             use: ["source-map-loader"],
           },
           {
+            test: /\.mjs$/,
+            enforce: "pre",
+            use: ["source-map-loader"],
+          },
+          {
             test: /\.(ts|tsx)$/,
             exclude: /node_modules/,
             use: ['ts-loader'],

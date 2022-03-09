@@ -25,8 +25,7 @@ const initialState: IAuthTypes.IAuthState = {
   isError:false,
   errorCode:0,
   errorMessage:'',
-  email: '',
-  username: '',
+  id_badge: '',
   password: '',
   token: '',
   isAuthenticated: localStorage.getItem(localStorageKey.TOKEN) ? true : false,
@@ -75,10 +74,29 @@ const authReducer:IGlobalTypes.IReducer<IAuthTypes.IAuthState> = (state = initia
     return {
       ...state,
       userProfile,
-      loginStep:2
+      loginStep:2,
+      isLoading:false
     }
   }
-
+  case authTypes.CLEAR_USER_PROFILE:{
+    return {
+      ...state,
+      userProfile:defaultUserProfile,
+      token:'',
+      loginStep:1
+    }
+  }
+  case authTypes.SET_USER_LOGIN:{
+    const {
+      isAuthenticated,
+      token
+    } = action.payload as Partial<IAuthTypes.IAuthState>
+    return {
+      ...state,
+      isAuthenticated:isAuthenticated || false,
+      token: token || ''
+    }
+  }
   default:
     return state
   }

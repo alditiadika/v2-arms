@@ -19,10 +19,8 @@ declare namespace IAuthTypes {
     role:string
     hash_password:string
   }
-  type IGraphqlResponseEmployeeProfile = IGlobalTypes.IGraphqlResponse<{v_employee_profiles:''}, IUserProfile[]>
   interface IAuthState extends IGlobalTypes.IGlobalInitialState {
-    email: string
-    username: string
+    id_badge: string
     password: string
     token:string
     isAuthenticated: boolean
@@ -43,11 +41,13 @@ declare namespace IAuthTypes {
     client:ApolloClient<object>,
     id_badge:string
   }
-  export type IAuthActionsSetValue = IGlobalTypes.IAction<ISetValuePayload>
+  type IAuthActionsSetValue = IGlobalTypes.IAction<ISetValuePayload>
   type IAuthActionsSetError = IGlobalTypes.IAction<ISetErrorPayload>
   type IAuthActionSetLoading = IGlobalTypes.IAction<boolean>
   type ITestGetData = IGlobalTypes.IAction<void>
   type IGetEmployeeProfile = IGlobalTypes.IAction<IGetEmployeeProfilePayload>
+  type IOnSubmitLogin = IGlobalTypes.IAction<{userProfile:IUserProfile, password:string}>
+  type IClearEmployeeProfile = IGlobalTypes.IAction<void>
 }
 export default IAuthTypes
 export const authTypes = {
@@ -56,4 +56,6 @@ export const authTypes = {
   SET_LOADING:'AUTH TYPES REDUCER SET LOADING',
   SET_DATA:'AUT TYPES REDUCER SET DATA',
   SET_USER_EMPLOYEE_PROFILE:'AUT TYPES REDUCER SET USER EMPLOYEE PROFILE',
+  CLEAR_USER_PROFILE:'AUT TYPES REDUCER CLEAR USER PROFILE',
+  SET_USER_LOGIN:'AUT TYPES REDUCER SET USER LOGIN',
 }
