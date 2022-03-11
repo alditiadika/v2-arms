@@ -8,4 +8,14 @@ const buttonStyle:CSSProperties = {
   border:'1px solid #ff6702',
   cursor:'pointer'
 }
-export default buttonStyle
+const iconStyle:CSSProperties = {
+  cursor:'pointer'
+}
+const clickableStyle:CSSProperties = {
+  cursor:'pointer'
+}
+export default {
+  buttonStyle,
+  iconStyle,
+  clickableStyle
+}

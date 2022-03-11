@@ -1,5 +1,6 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import { AuthTypes as IAuthTypes } from 'pages/login'
+import { errorResponse } from 'utils/error-response'
 import IGlobalTypes from 'utils/global-types'
 
 type TGetDataFunc = () => Promise<IGlobalTypes.IServiceResponse<IAuthTypes.ITestData[]>>
@@ -7,7 +8,7 @@ type TGetDataFunc = () => Promise<IGlobalTypes.IServiceResponse<IAuthTypes.ITest
 const testGetData:TGetDataFunc = async () => {
   try {
     const response = await axios.get('https://61ca6f6a37ae840017c6f56f.mockapi.io/v1/test/Test')
-    const data = response.data as IAuthTypes.ITestData[]
+    const data:IAuthTypes.ITestData[] = response.data
     return {
       isError: false,
       errorMessage: '',
@@ -16,13 +17,12 @@ const testGetData:TGetDataFunc = async () => {
     }
 
   } catch(e) {
-    const err = e as AxiosError
-    return {
-      isError: true,
-      errorMessage: err.message,
-      errorCode: err.code || 500,
-      data:[]
-    }
+    const {
+      isError,
+      errorCode,
+      errorMessage
+    } = errorResponse(e)
+    return { isError, errorMessage, errorCode, data:[] }
   }
 }
 export default testGetData

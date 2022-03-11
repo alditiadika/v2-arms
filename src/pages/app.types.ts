@@ -25,38 +25,33 @@ type TMenuGroup = 'dashboard' |
   'report' |
   'control_panel'
 
-type TSidebarStatus = 'showAll' | 'hideAll' | 'hideSubMenu'  
 type TMenu = 'dashboard' | 'masterData' | 'employee' | 'transaction' | 'report' | 'controlPanel'
 
+type TItem = { title:string, show:boolean, selected:boolean, path:string }
 declare namespace IAppTypes {
-  interface ISubMenuItem {
-    title:string
+  interface ISubMenuItem extends TItem {
     subMenuName:TMasterDataField | TEmployeeField | TTransactionField | TReportField
     group:TMenuGroup
-    selected:boolean
-    show:boolean
-    path:string
   }
-  interface IMenuItem {
+  interface IMenuItem extends TItem {
     menu:TMenu
-    title:string
-    selected:boolean
-    path:string
-    show:boolean
     subMenu:ISubMenuItem[]
+  }
+  type TSidebarStatus = 'showAll' | 'hideAll' | 'hideSubMenu'  
+  interface ISidebarState {
+    status:TSidebarStatus
+    menu:IMenuItem[]
+  }
+  interface INavbarState {
+    fullScreen:boolean
+    totalNotification:number
+    show:boolean
   }
   interface IAppState {
     name:string
     version:string
-    sidebar:{
-      status:TSidebarStatus
-      menu:IMenuItem[]
-    }
-    navbar:{
-      fullScreen:boolean
-      totalNotification:number
-      show:boolean
-    }
+    sidebar:ISidebarState
+    navbar:INavbarState
   }
   type ISelectMenuPayload = { 
     menu:TMenu, 
@@ -66,6 +61,7 @@ declare namespace IAppTypes {
   type IAppActionSetSidebarStatus = IGlobalTypes.IAction<TSidebarStatus>
   type IAppActionSetFullScreen = IGlobalTypes.IAction<boolean>
   type IAppActionSetTotalNotification = IGlobalTypes.IAction<number>
+  type IAppActionToggleSidebar = IGlobalTypes.IAction<void>
 }
 export default IAppTypes
 
@@ -103,5 +99,6 @@ export const initialState:IAppTypes.IAppState = {
 export const appTypes = {
   APP_SET_SIDEBAR_STATUS:'APP TYPES SET SIDEBAR STATUS',
   APP_SET_FULLSCREEN:'APP TYPES SET FULLSCREEN',
-  APP_SET_TOTAL_NOTIFICATION:'APP TYPES SET TOTAL NOTIFICATION'
+  APP_SET_TOTAL_NOTIFICATION:'APP TYPES SET TOTAL NOTIFICATION',
+  TOGGLE_SIDEBAR:'APP TYPES TOGGLE SIDEBAR',
 }

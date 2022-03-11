@@ -5,7 +5,7 @@ import { initialState, appTypes } from './app.types'
 const appReducer:IGlobalTypes.IReducer<IAppTypes.IAppState> = (state = initialState, action) => {
   switch (action.type) {
   case appTypes.APP_SET_SIDEBAR_STATUS: {
-    const { menu, subMenu } = action.payload as IAppTypes.ISelectMenuPayload
+    const { menu, subMenu }:IAppTypes.ISelectMenuPayload = action.payload
     const nothingSubMenu = state.sidebar.menu.find(m => m.menu === menu)?.subMenu.length === 0
     if(subMenu) {
       return {
@@ -45,8 +45,19 @@ const appReducer:IGlobalTypes.IReducer<IAppTypes.IAppState> = (state = initialSt
       }
     }
   }
+  case appTypes.TOGGLE_SIDEBAR: {
+    const status:IAppTypes.TSidebarStatus = state.sidebar.status === 'hideSubMenu' ? 
+      'hideAll' : 'hideSubMenu'
+    return {
+      ...state,
+      sidebar:{
+        ...state.sidebar,
+        status
+      }
+    }
+  }
   case appTypes.APP_SET_FULLSCREEN: {
-    const fullScreen = action.payload as boolean
+    const fullScreen:boolean = action.payload
     return {
       ...state,
       navbar: {
@@ -56,7 +67,7 @@ const appReducer:IGlobalTypes.IReducer<IAppTypes.IAppState> = (state = initialSt
     }
   }
   case appTypes.APP_SET_TOTAL_NOTIFICATION: {
-    const totalNotification = action.payload as number
+    const totalNotification:number = action.payload
     return {
       ...state,
       navbar: {

@@ -11,7 +11,3 @@ const store = createStore(
   composed
 )
 export default store
-
-const state = store.getState()
-export type TStore = typeof store
-export type IGlobalState = typeof state

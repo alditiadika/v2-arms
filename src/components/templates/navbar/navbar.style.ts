@@ -16,10 +16,42 @@ const navbarBody:CSSProperties = {
   flexDirection:'row',
   flexWrap:'wrap',
   justifyContent:'space-between',
-  alignContent:'center',
+  alignItems:'center',
   height:'100%'
+}
+const navbarMiddleComponent:CSSProperties = {
+  textAlign:'center'
+}
+const navbarLogo:CSSProperties = {
+  cursor:'pointer',
+  width:'100%',
+  maxWidth:'400px',
+  height:'38px'
+}
+const navbarCopyright:CSSProperties = {
+  fontSize:'10px',
+  color:'gray',
+  cursor:'default'
+}
+const navbarUsername:CSSProperties = {
+  fontSize:'.8rem',
+}
+const navbarDropdown:CSSProperties = {
+  position:'fixed',
+  zIndex:100,
+  top:`calc(${navbarStyle.height} + 2px)`,
+  right:'20px',
+  backgroundColor:'#fff',
+  minWidth:'145px',
+  display:'grid',
+  justifyItems:'center'
 }
 export default {
   navbarRoot,
-  navbarBody
+  navbarBody,
+  navbarLogo,
+  navbarCopyright,
+  navbarMiddleComponent,
+  navbarUsername,
+  navbarDropdown
 }

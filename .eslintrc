@@ -6,7 +6,8 @@
     "ecmaFeatures":{
       "jsx":true
     },
-    "warnOnUnsupportedTypeScriptVersion": false
+    "warnOnUnsupportedTypeScriptVersion": false,
+    "project": "./tsconfig.json"
   },
   "settings":{
     "react":{
@@ -15,8 +16,9 @@
   },
   "extends": [
     "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-    "plugin:react/recommended" // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    "plugin:react/recommended" // Uses the recommended rules from the @typescript-eslint/eslint-plugin,
   ],
+  "plugins": ["no-type-assertion"],
   "rules": {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off"
@@ -31,6 +33,12 @@
     "semi": ["error", "never"],
     "no-use-before-define": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
-    "max-len": ["error", { "code": 120 }]
+    "max-len": ["error", { "code": 120 }],
+    "@typescript-eslint/no-unnecessary-type-assertion":"error",
+    "@typescript-eslint/consistent-type-assertions":["error", {
+      "assertionStyle":"as", "objectLiteralTypeAssertions": "never"
+    }],
+    "@typescript-eslint/no-explicit-any":"error",
+    "no-type-assertion/no-type-assertion": "error"
   }
 }

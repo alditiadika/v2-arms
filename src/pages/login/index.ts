@@ -1,7 +1,7 @@
-import AuthComponent from './auth.component'
-import AuthActions from './auth.action'
-import AuthReducer from './auth.reducer'
-import AuthTypes from './auth.types'
+import AuthComponent from './login.component'
+import AuthActions from './login.action'
+import AuthReducer from './login.reducer'
+import AuthTypes from './login.types'
 
 export default AuthComponent
 export {

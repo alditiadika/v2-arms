@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from '../card'
+import { Card } from '../../card'
 
 type TProps = Record<string, unknown>
 const Modal:React.FC<TProps> = ({

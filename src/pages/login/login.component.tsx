@@ -1,19 +1,19 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { connect, useSelector } from 'react-redux'
 import { useApolloClient } from '@apollo/client'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
 import RedirectDefaultPath from 'components/atoms/redirect-default-path'
-import { IGlobalState } from 'store'
+import { IGlobalState } from 'store/reducers'
 import capitalize from 'utils/capitalize'
 import { Card } from 'components/molecules/card'
 import { Input } from 'components/atoms/input'
 import { Button } from 'components/atoms/button'
 
 import ARMSLogo from 'assets/img/logo_arms@1.5x.png'
-import styles from './auth.style'
-import IAuthTypes from './auth.types'
-import authActions from './auth.action'
+import styles from './login.style'
+import IAuthTypes from './login.types'
+import authActions from './login.action'
 import IAppTypes from 'pages/app.types'
 import appAction from '../app.action'
 
@@ -22,14 +22,16 @@ type TProps = {
   getEmployeeProfile:IAuthTypes.IGetEmployeeProfile,
   clearEmployeeProfile:IAuthTypes.IClearEmployeeProfile,
   onSubmitLogin:IAuthTypes.IOnSubmitLogin,
-  selectMenu:IAppTypes.IAppActionSelectMenu
+  selectMenu:IAppTypes.IAppActionSelectMenu,
+  getTestData:IAuthTypes.ITestGetData
 }
 const mapDispatchToProps:TProps = {
   setValue: authActions.setValue,
   getEmployeeProfile:authActions.getEmployeeProfileAction,
   clearEmployeeProfile:authActions.clearEmployeeProfileAction,
   onSubmitLogin:authActions.onSubmitLoginAction,
-  selectMenu:appAction.appActionSelectMenu
+  selectMenu:appAction.appActionSelectMenu,
+  getTestData:authActions.testGetDataAction
 }
 
 const AuthComponent:React.FC<TProps> = ({ 
@@ -37,7 +39,8 @@ const AuthComponent:React.FC<TProps> = ({
   getEmployeeProfile, 
   clearEmployeeProfile,
   onSubmitLogin,
-  selectMenu 
+  selectMenu,
+  getTestData 
 }) => {
   const client = useApolloClient()
   const { 
@@ -48,12 +51,15 @@ const AuthComponent:React.FC<TProps> = ({
     password,
     userProfile
   } = useSelector<IGlobalState, IAuthTypes.IAuthState>(state => state.auth)
+  useEffect(() => {
+    getTestData()
+  }, [])
   const onClick = () => {
     if(loginStep === 1) {
       getEmployeeProfile({ client, id_badge })
     } else {
       onSubmitLogin({ userProfile, password })
-      selectMenu({ menu:'masterData', subMenu:null })
+      selectMenu({ menu:'dashboard', subMenu:null })
     }
   }
 

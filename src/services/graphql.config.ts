@@ -11,10 +11,10 @@ import { SubscriptionClient } from 'subscriptions-transport-ws'
 type TReqLink = (q:ApolloLink, s:ApolloLink) => ApolloLink
 type TMainDef = { kind:'OperationDefinition', operation:'query' | 'mutation' | 'subscription' }
 
-const username = process.env.PRISMA_USERNAME as string
-const password = process.env.PRISMA_PASSWORD as string
-const endpoint = process.env.PRISMA_ENDPOINT as string
-const subscriptionEndpoint = process.env.PRISMA_SUBSCRIPTION_ENDPOINT as string
+const username = String(process.env.PRISMA_USERNAME)
+const password = String(process.env.PRISMA_PASSWORD)
+const endpoint = String(process.env.PRISMA_ENDPOINT)
+const subscriptionEndpoint = String(process.env.PRISMA_SUBSCRIPTION_ENDPOINT)
 
 const httpLink = new HttpLink({
   uri:endpoint,
@@ -31,6 +31,7 @@ const wsLink = new WebSocketLink(new SubscriptionClient(subscriptionEndpoint, {
 const requestLink:TReqLink = (queryOrMutationLink, subscriptionLink) => {
   return ApolloLink.split(
     ({ query }) => {
+      //eslint-disable-next-line
       const { kind, operation } = getMainDefinition(query) as TMainDef
       return kind === 'OperationDefinition' && operation === 'subscription'
     },

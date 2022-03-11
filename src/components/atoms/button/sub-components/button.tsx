@@ -1,6 +1,7 @@
 import React from 'react'
 import { Spinner } from 'reactstrap'
-import styles from './button.style'
+import styleOverider from 'utils/style-overider'
+import styles from '../button.style'
 interface TProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean
 }
@@ -8,7 +9,7 @@ const ButtonComponent:React.FC<TProps> = ({ children, isLoading = false, ...prop
   return (
     <button 
       {...props}
-      style={{ ...styles, ...props.style }}
+      style={styleOverider(styles.buttonStyle, props.style)}
     >
       {isLoading ? <Spinner /> : children}
     </button>

@@ -1,6 +1,6 @@
 import IGlobalTypes from 'utils/global-types'
 import { localStorageKey } from 'utils/constants'
-import IAuthTypes, { authTypes } from './auth.types'
+import IAuthTypes, { authTypes } from './login.types'
 
 const defaultUserProfile:IAuthTypes.IUserProfile =  {
   id:0,
@@ -15,7 +15,7 @@ const defaultUserProfile:IAuthTypes.IUserProfile =  {
 const getUserProfile:() => IAuthTypes.IUserProfile = () => {
   const stringUProfile = localStorage.getItem(localStorageKey.USER_PROFILE)
   if(stringUProfile) {
-    const userProfile = JSON.parse(stringUProfile) as IAuthTypes.IUserProfile
+    const userProfile:IAuthTypes.IUserProfile = JSON.parse(stringUProfile)
     return userProfile
   } 
   return defaultUserProfile
@@ -44,7 +44,7 @@ const authReducer:IGlobalTypes.IReducer<IAuthTypes.IAuthState> = (state = initia
   }
 
   case authTypes.SET_ERROR: {
-    const { errorCode, isError, errorMessage } = action.payload as IAuthTypes.ISetErrorPayload
+    const { errorCode, isError, errorMessage }:IAuthTypes.ISetErrorPayload = action.payload 
     return {
       ...state,
       isLoading:false,
@@ -55,7 +55,7 @@ const authReducer:IGlobalTypes.IReducer<IAuthTypes.IAuthState> = (state = initia
   }
 
   case authTypes.SET_VALUE: {
-    const { value, field } = action.payload as IAuthTypes.ISetValuePayload
+    const { value, field }:IAuthTypes.ISetValuePayload = action.payload 
     return {
       ...state,
       [field]: value,
@@ -63,14 +63,14 @@ const authReducer:IGlobalTypes.IReducer<IAuthTypes.IAuthState> = (state = initia
   }
 
   case authTypes.SET_DATA: {
-    const testData = action.payload as IAuthTypes.ITestData[]
+    const testData:IAuthTypes.ITestData[] = action.payload
     return {
       ...state,
       testData
     }
   }
   case authTypes.SET_USER_EMPLOYEE_PROFILE:{
-    const userProfile = action.payload as IAuthTypes.IUserProfile
+    const userProfile:IAuthTypes.IUserProfile = action.payload
     return {
       ...state,
       userProfile,
@@ -90,11 +90,19 @@ const authReducer:IGlobalTypes.IReducer<IAuthTypes.IAuthState> = (state = initia
     const {
       isAuthenticated,
       token
-    } = action.payload as Partial<IAuthTypes.IAuthState>
+    }:Pick<IAuthTypes.IAuthState, 'token' | 'isAuthenticated'> = action.payload
     return {
       ...state,
       isAuthenticated:isAuthenticated || false,
       token: token || ''
+    }
+  }
+  case authTypes.LOGOUT: {
+    return {
+      ...initialState,
+      isAuthenticated:false,
+      loginStep:1,
+      userProfile:defaultUserProfile
     }
   }
   default:

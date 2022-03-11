@@ -1,2 +1,5 @@
-import Button from './button.component'
-export { Button }
+import Button from './sub-components/button'
+import Clickable from './sub-components/clickable'
+import Icon from './sub-components/icon'
+
+export { Button, Icon, Clickable }
