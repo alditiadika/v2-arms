@@ -1,28 +1,24 @@
-import React, { useState, Fragment } from 'react'
-import './error.style.css'
-import { Button } from 'reactstrap'
-import { Navigate } from 'react-router-dom'
+import React, { Fragment } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Button } from 'components/atoms/button'
+import styles from './error.style'
 
 const Error404:React.FC = () => {
-  const [isClick, setClick] = useState<boolean>(false)
-  return isClick ? <Navigate to='/' /> :  (
+  const navigation = useNavigate()
+  return (
     <Fragment>
-      <h1 className='h1-404'>
-      404<br/>
-      Page Not Found<br/>
-        <Button 
-          onClick={() => setClick(true)}
-          style={{ cursor:'pointer' }} 
-          color='primary'
-        >
-          Go Back
-        </Button>
-      </h1>
-      <div className='frame'/>
-
+      <div style={styles.errorContainer}>
+        <h1 className='h1-404'>
+        Page Not Found<br/>
+          <Button 
+            onClick={() => navigation('/')}
+          >
+            Go Back
+          </Button>
+        </h1>
+        <div className='frame'/>
+      </div>
     </Fragment>
-
-      
   )
 }
 export default Error404

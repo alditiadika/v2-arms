@@ -1,3 +1,8 @@
+import { CompositeFilterDescriptor, SortDescriptor } from '@progress/kendo-data-query'
+import { GridCellProps, GridColumnProps, GridProps } from '@progress/kendo-react-grid'
+import { ScrollMode } from '@progress/kendo-react-grid/dist/npm/ScrollMode'
+import { CSSProperties } from 'react'
+
 /** *
   * Declare global types
 */
@@ -12,6 +17,7 @@ type ResolveField<GQLType extends TypeGraphql, Tkey extends string> =
   Tkey
   
 declare namespace IGlobalTypes {
+  export type Nullable<T> = { [K in keyof T]: T[K] | null }
   export type IDispatch<TParamAction> = (t:TParamAction) => void
   //eslint-disable-next-line
   export type IActionObj = {type:string, payload:any}
@@ -30,10 +36,33 @@ declare namespace IGlobalTypes {
     errorCode:number | string
     data:TData
   }
-  export interface IGraphqlResponse<GQLType extends TypeGraphql, Key extends string, TData> {
+  export interface IGraphqlResponse<GQLType extends TypeGraphql, Key extends string, TData = null> {
     readonly data:{
       [k in ResolveField<GQLType, Key>]: GQLType extends 'count' ? { aggregate: { count:number } }: TData
     }
   }
+  interface ICustomColumn extends GridColumnProps {
+    show:boolean
+  }
+  interface ICustomDataStates {
+    skip:number
+    take:number
+    total:number
+    sortable:boolean
+    filterable:boolean
+    reorderable:boolean
+    scrollable:ScrollMode
+    filter?:CompositeFilterDescriptor
+    sort?:SortDescriptor[]
+  }
+  interface ICustomGrid extends GridProps {
+    dataGrid:object[],
+    dataStates:ICustomDataStates,
+    style?:CSSProperties,
+    columns:ICustomColumn[],
+    children?:React.FunctionComponent<GridColumnProps>
+  }
+  type TCustomCellRender = (defaultRendering: React.ReactElement<HTMLTableCellElement> | null, props: GridCellProps) => 
+    React.ReactElement<HTMLTableCellElement> | React.ReactElement<HTMLTableCellElement>[] | null
 }
 export default IGlobalTypes

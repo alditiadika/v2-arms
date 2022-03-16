@@ -4,3 +4,17 @@ html, #root, body, * {
   line-height: 1;
   box-sizing: border-box;
 }
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+}
+.no-scrollbar::-webkit-scrollbar-track {
+  display: none;
+  visibility: hidden;
+}
+.no-scrollbar::-webkit-scrollbar-thumb {
+  display: none;
+  visibility: hidden;
+}
+.hover-orange:hover {
+  color:#FF6701;
+}

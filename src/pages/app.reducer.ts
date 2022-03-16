@@ -4,15 +4,24 @@ import { initialState, appTypes } from './app.types'
 
 const appReducer:IGlobalTypes.IReducer<IAppTypes.IAppState> = (state = initialState, action) => {
   switch (action.type) {
-  case appTypes.APP_SET_SIDEBAR_STATUS: {
+  case appTypes.APP_SELECT_MENU: {
     const { menu, subMenu }:IAppTypes.ISelectMenuPayload = action.payload
-    const nothingSubMenu = state.sidebar.menu.find(m => m.menu === menu)?.subMenu.length === 0
+    const menuFind = state.sidebar.menu.find(m => m.menu === menu)
+    const nothingSubMenu = menuFind?.subMenu.length === 0
+    const menuSelected:IAppTypes.ISidebarState['selectedMenu'] = { 
+      menu,
+      pathMenu:menuFind?.path || '/dashboard',
+      subMenu:subMenu ? undefined : subMenu,
+      pathSubMenu:subMenu ? undefined : menuFind?.subMenu[0]?.path
+    }
+
     if(subMenu) {
       return {
         ...state,
         sidebar:{
           ...state.sidebar,
           status:'hideSubMenu',
+          selectedMenu:menuSelected,
           menu:state.sidebar.menu.map(menuItem => {
             if(menuItem.menu === menu) {
               return {
@@ -26,7 +35,12 @@ const appReducer:IGlobalTypes.IReducer<IAppTypes.IAppState> = (state = initialSt
                 })
               }
             }
-            return { ...menuItem, selected:false }
+            return { 
+              ...menuItem, selected:false,
+              subMenu:menuItem.subMenu.map(subMenuItem => {
+                return { ...subMenuItem, selected:false }
+              }) 
+            }
           })
         }
       }
@@ -36,8 +50,9 @@ const appReducer:IGlobalTypes.IReducer<IAppTypes.IAppState> = (state = initialSt
       sidebar:{
         ...state.sidebar,
         status:nothingSubMenu ? 'hideSubMenu' : 'showAll',
+        selectedMenu:menuSelected,
         menu:state.sidebar.menu.map(menuItem => {
-          if(menuItem.menu) {
+          if(menuItem.menu === menu) {
             return { ...menuItem, selected:true }
           }
           return { ...menuItem, selected:false }

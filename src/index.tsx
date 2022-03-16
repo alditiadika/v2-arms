@@ -12,6 +12,7 @@ import serviceWorker from './sw'
 //import all general styles
 import 'assets/css/root.css'
 import '@progress/kendo-theme-material/dist/all.css'
+import 'assets/css/kendo.css'
 
 const Root:React.FC = () => {
   return (

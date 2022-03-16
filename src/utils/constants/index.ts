@@ -115,19 +115,15 @@ const employeeSubMenu:IAppTypes.ISubMenuItem[] = [
 const transactionMenu:IAppTypes.ISubMenuItem[] = [
   { 
     title:'WO Resource Management', subMenuName:'woPOS', 
-    selected:false, group:'transaction', show:true, path:'/work-pos' 
+    selected:false, group:'transaction', show:true, path:'/work-order-pos' 
   },
   { 
     title:'WO Schedule Management', subMenuName:'woSchedule', 
-    selected:false, group:'transaction', show:true, path:'/work-schedule' 
+    selected:false, group:'transaction', show:true, path:'/work-order-schedule' 
   },
   { 
     title:'SQC Management', subMenuName:'sqcManagement', 
     selected:false, group:'transaction', show:true, path:'/sqc-management' 
-  },
-  { 
-    title:'Work Order', subMenuName:'workOrder', 
-    selected:false, group:'transaction', show:true, path:'/work-order' 
   },
   { 
     title:'Defect Management', subMenuName:'defectManagement', 
@@ -207,9 +203,24 @@ const sidebarStyle = {
   menuHeight:`calc(100vh - ${navbarStyle.height})`,
   subMenuWidth:'250px'
 }
+const fixedZIndex = {
+  modal:99999,
+  navbar:99998,
+  sidebar:99997
+}
+const gridStyle = {
+  height:`calc(100vh - ${navbarStyle.height} - 190px)`
+}
+const formatGridDate = {
+  ddMMYYYY:'{0:dd-MM-yyyy}',
+  hhMM:'{0:HH:mm}'
+}
 export {
   localStorageKey,
   subMenuList,
   sidebarStyle,
-  navbarStyle
+  navbarStyle,
+  gridStyle,
+  formatGridDate,
+  fixedZIndex
 }

@@ -4,7 +4,12 @@ import { Card, CardBody } from '../../molecules/card'
 import Typography from '@mui/material/Typography'
 
 import { IGlobalState } from 'store/reducers'
-import NavbarToggle from 'assets/img/toggle-nav.svg'
+import {
+  Menu as NavbarToggle,
+  Fullscreen, FullscreenExit,
+  Notifications
+} from '@mui/icons-material'
+import Badge from '@mui/material/Badge'
 import NavbarLogo from 'assets/img/nav-logo.svg'
 import appAction from 'pages/app.action'
 import IAppTypes from 'pages/app.types'
@@ -18,14 +23,17 @@ import {
 
 type TProps = {
   onClickToggle:IAppTypes.IAppActionToggleSidebar,
-  onLogout:IAuthTypes.IOnLogout
+  onLogout:IAuthTypes.IOnLogout,
+  setFullscreen:IAppTypes.IAppActionSetFullScreen
 }
 const mapDispatchToProps:TProps = {
   onClickToggle:appAction.appActionClickToggleNav,
-  onLogout:authActions.onLogoutAction
+  onLogout:authActions.onLogoutAction,
+  setFullscreen:appAction.appActionSetFullscreen
 }
-const Navbar:React.FC<TProps> = ({ onClickToggle, onLogout }) => {
+const Navbar:React.FC<TProps> = ({ onClickToggle, onLogout, setFullscreen }) => {
   const { userProfile } = useSelector<IGlobalState, IAuthTypes.IAuthState>(state => state.auth)
+  const { navbar } = useSelector<IGlobalState, IAppTypes.IAppState>(state => state.app)
   const [showDropdown, setShowDropDown] = useState<boolean>(false)
   return (
     <Fragment>
@@ -43,10 +51,9 @@ const Navbar:React.FC<TProps> = ({ onClickToggle, onLogout }) => {
       <Card style={styles.navbarRoot}>
         <CardBody style={styles.navbarBody}>
           <div id='navbar-toogle'>
-            <Icon
-              onClick={() => onClickToggle()}
-              src={NavbarToggle}
-            />
+            <Clickable onClick={() => onClickToggle()}>
+              <NavbarToggle />
+            </Clickable>
           </div>
           <div style={styles.navbarMiddleComponent} id='navbar-logo'>
             <Icon
@@ -62,7 +69,18 @@ const Navbar:React.FC<TProps> = ({ onClickToggle, onLogout }) => {
               </Typography>
             </Tooltip>
           </div>
-          <div id='navbar-account-info'>
+          <div style={styles.navbarRightComponent} id='navbar-account-info'>
+            <Clickable style={styles.navbarNotification}>
+              <Badge badgeContent={navbar.totalNotification} color='primary'>
+                <Notifications/>
+              </Badge>
+            </Clickable>
+            <Clickable 
+              style={styles.navbarFullscreen}
+              onClick={() => setFullscreen()}
+            >
+              {navbar.fullScreen ? <FullscreenExit/>: <Fullscreen/>}
+            </Clickable>
             <Clickable 
               style={styles.navbarUsername}
               onClick={() => setShowDropDown(!showDropdown)}

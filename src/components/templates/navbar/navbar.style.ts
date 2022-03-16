@@ -1,9 +1,9 @@
 import { CSSProperties } from 'react'
-import { navbarStyle } from 'utils/constants'
+import { fixedZIndex, navbarStyle } from 'utils/constants'
 
 const navbarRoot:CSSProperties = {
   position:'fixed',
-  zIndex:99,
+  zIndex:fixedZIndex.navbar,
   top:0,
   left:0,
   width:navbarStyle.width,
@@ -46,6 +46,16 @@ const navbarDropdown:CSSProperties = {
   display:'grid',
   justifyItems:'center'
 }
+const navbarRightComponent:CSSProperties = {
+  display:'flex',
+  alignItems:'center'
+}
+const navbarFullscreen:CSSProperties = {
+  marginRight:'20px'
+}
+const navbarNotification:CSSProperties = {
+  marginRight:'30px'
+}
 export default {
   navbarRoot,
   navbarBody,
@@ -53,5 +63,8 @@ export default {
   navbarCopyright,
   navbarMiddleComponent,
   navbarUsername,
-  navbarDropdown
+  navbarDropdown,
+  navbarRightComponent,
+  navbarFullscreen,
+  navbarNotification
 }

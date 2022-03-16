@@ -6,6 +6,7 @@ import {
 import Home from './home'
 import RedirectDefaultPath from 'components/atoms/redirect-default-path'
 import { ErrorNotFound } from 'components/templates/errors'
+import MasterData from './master-data'
 
 const MainRoutes:React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const MainRoutes:React.FC = () => {
       <RedirectDefaultPath from='/' to='/dashboard' />
       <Routes>
         <Route path='/dashboard' element={<Home/>} />    
+        <Route path='/master-data/*' element={<MasterData/>} />    
         <Route path='*' element={<ErrorNotFound/>} />
       </Routes>
     </Fragment>
