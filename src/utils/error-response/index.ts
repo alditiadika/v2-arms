@@ -22,6 +22,7 @@ export const errorResponse:TFn = (err, code) => {
       errorMessage:err.message
     }
   }
+  console.log(err)
   return {
     isError:true,
     errorCode:400,

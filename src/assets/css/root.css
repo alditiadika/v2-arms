@@ -1,8 +1,14 @@
 
 html, #root, body, * {
-  font-family: 'Roboto Condensed', fantasy !important;
+  font-family: 'Roboto Condensed';
   line-height: 1;
   box-sizing: border-box;
+}
+.MuiTypography-root {
+  font-family: 'Roboto Condensed' !important;
+}
+button[title="Clear"] {
+  display: none;
 }
 .no-scrollbar::-webkit-scrollbar {
   width: 0;
@@ -17,4 +23,7 @@ html, #root, body, * {
 }
 .hover-orange:hover {
   color:#FF6701;
+}
+input[aria-label="Filter"] {
+  text-transform: uppercase !important;
 }

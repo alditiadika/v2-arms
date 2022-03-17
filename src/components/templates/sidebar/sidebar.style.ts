@@ -53,9 +53,6 @@ const subMenuGroupContainer:CSSProperties = {
   marginTop:'25px',
   paddingBottom:'25px'
 }
-// const subMenuItemContainer:CSSProperties = {
-
-// }
 const subMenuItem: CSSProperties = {
   display:'grid',
   alignItems:'center',

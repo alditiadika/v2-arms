@@ -10,7 +10,7 @@ interface TStyle extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Input:React.FC<TStyle> = ({ label, containerStyle, error, ...props }) => {
   return (
-    <div style={{ padding:0, ...containerStyle }} className='container'>
+    <div style={{ padding:0, ...containerStyle }} className='custom-input-container'>
       <div className={'did-floating-label-content ' + (error ? 'did-error-input':'')}>
         <input 
           {...props}

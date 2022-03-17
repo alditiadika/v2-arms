@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { useApolloClient } from '@apollo/client'
+import { GridPageChangeEvent } from '@progress/kendo-react-grid'
 import { connect, useSelector } from 'react-redux'
 
 import { IGlobalState } from 'store/reducers'
 import HeaderMenu from 'components/molecules/header-menu'
 import Grid from 'components/organisms/grid'
-import { gridStyle } from 'utils/constants'
+import { gridStyle, pathList } from 'utils/constants'
 
 import notificationAction from './notification.action'
 import INotificationTypes, { notificationColumnProps } from './notification.types'
 import styles from './notification.style'
-import Spinner from 'components/atoms/spinner'
 import customRenderCell from 'components/atoms/custom-cell-grid'
 import { ModalError } from 'components/molecules/modal'
 
@@ -18,16 +18,22 @@ type TProps = {
   getDataGrid:INotificationTypes.INotificationGetData,
   onPageChange:INotificationTypes.INotificationPageChange,
   setError:INotificationTypes.INotificationSetError,
+  onDataStateChange:INotificationTypes.INotificationDataStateChange,
+  onClickFilter:INotificationTypes.INotificationOnClickFilter
 }
 const mapDispatchToProps:TProps = {
   getDataGrid:notificationAction.notificationGetDataFirstLoading,
   onPageChange:notificationAction.onPageChange,
-  setError:notificationAction.setError
+  onDataStateChange:notificationAction.onDataStateChange,
+  setError:notificationAction.setError,
+  onClickFilter:notificationAction.onClickFilter,
 }
 const Notification:React.FC<TProps> = ({ 
   getDataGrid,
   onPageChange,
-  setError 
+  onDataStateChange,
+  setError,
+  onClickFilter 
 }) => {
   const client = useApolloClient()
   const {
@@ -42,18 +48,26 @@ const Notification:React.FC<TProps> = ({
       getDataGrid({ client, dataStates })
     }
   }, [isLoading])
+  const pageChange = (event:GridPageChangeEvent) => {
+    onPageChange({ client, dataStates, event, oldDataGrid:dataGrid })
+  }
+  const closeError = () => {
+    setError({ errorCode:'', errorMessage:'', isError:false })
+  }
   return (
     <div style={styles.container}>
       <ModalError 
-        onClose={() => setError({ errorCode:'', errorMessage:'', isError:false })}
+        onClose={closeError}
         errorMessage={errorMessage}
         show={isError}
       />
-      <Spinner isLoading={isLoading} />
       <HeaderMenu 
         menu='Notification' 
-        path='/master-data'
+        path={pathList.masterData.path}
         routeName='Notification'
+        isLoading={isLoading}
+        filterable={dataStates.filterable}
+        onClickFilter={onClickFilter}
       >
       </HeaderMenu>
       <Grid
@@ -61,8 +75,9 @@ const Notification:React.FC<TProps> = ({
         columns={notificationColumnProps}
         dataStates={dataStates}
         style={gridStyle}
-        onPageChange={event => onPageChange({ client, dataStates, event, oldDataGrid:dataGrid })}
+        onPageChange={pageChange}
         cellRender={customRenderCell(['maintenance_plant', 'location'])}
+        onDataStateChange={onDataStateChange}
       />
     </div>
   )

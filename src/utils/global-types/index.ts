@@ -56,11 +56,12 @@ declare namespace IGlobalTypes {
     sort?:SortDescriptor[]
   }
   interface ICustomGrid extends GridProps {
-    dataGrid:object[],
-    dataStates:ICustomDataStates,
-    style?:CSSProperties,
-    columns:ICustomColumn[],
+    dataGrid:object[]
+    dataStates:ICustomDataStates
+    style?:CSSProperties
+    columns:ICustomColumn[]
     children?:React.FunctionComponent<GridColumnProps>
+    showTotal?:boolean
   }
   type TCustomCellRender = (defaultRendering: React.ReactElement<HTMLTableCellElement> | null, props: GridCellProps) => 
     React.ReactElement<HTMLTableCellElement> | React.ReactElement<HTMLTableCellElement>[] | null

@@ -1,5 +1,8 @@
 import { ApolloClient } from '@apollo/client'
-import { GridPageChangeEvent } from '@progress/kendo-react-grid'
+import { 
+  GridDataStateChangeEvent, 
+  GridPageChangeEvent 
+} from '@progress/kendo-react-grid'
 import customHeaderCell from 'components/atoms/custom-header-cell'
 import { formatGridDate } from 'utils/constants'
 import IGlobalTypes from 'utils/global-types'
@@ -79,12 +82,18 @@ declare namespace INotificationTypes {
   type TResponseType = IGlobalTypes.IGraphqlResponse<
     'view', 'sap_notification_headers', INotificationTypes.INotificationGrid[]
     >
+  
   type TResponseCountType = IGlobalTypes.IGraphqlResponse<'count', 'sap_notification_headers'>
   type INotificationGetData = IGlobalTypes.IAction<IGetNotificationPayload>
   type INotificationSetError = IGlobalTypes.IAction<ISetErrorPayload>
   type INotificationActionSetLoading = IGlobalTypes.IAction<boolean>
   type INotificationPageChange =  IGlobalTypes.IAction<TOnPageChange>
-  type INotificationRequestIfNeeded = (t:TParam) => Promise<INotificationGrid[]>
+  type INotificationDataStateChange = IGlobalTypes.IAction<GridDataStateChangeEvent>
+  type INotificationOnClickFilter = IGlobalTypes.IAction<void>
+  type INotificationRequestIfNeeded = (t:TParam) => Promise<{
+    isDataRequest:boolean,
+    dataGrid:INotificationGrid[]
+  }>
 }
 export default INotificationTypes
 export const notificationTypes = {
@@ -92,14 +101,17 @@ export const notificationTypes = {
   SET_ERROR:'NOTIFICATION TYPES REDUCER SET ERROR',
   SET_LOADING:'NOTIFICATION TYPES REDUCER SET LOADING',
   SET_DATA_GRID:'NOTIFICATION TYPES REDUCER SET DATA GRID',
-  PAGE_CHANGE:'NOTIFICATION TYPES REDUCER PAGE CHANGE'
+  PAGE_CHANGE:'NOTIFICATION TYPES REDUCER PAGE CHANGE',
+  DATA_STATE_CHANGE:'NOTIFICATION TYPES REDUCER DATA STATE CHANGE',
+  ON_CLICK_FILTER:'NOTIFICATION TYPES REDUCER ON CLICK FILTER'
 }
 export const notificationColumnProps:IGlobalTypes.ICustomColumn[] = [
   {
     show:true,
     field:'index',
     title:'No',
-    width:'50px'
+    width:'70px',
+    filterable:false
   },
   {
     show:true,
@@ -214,28 +226,32 @@ export const notificationColumnProps:IGlobalTypes.ICustomColumn[] = [
     field:'start_of_malfunction_date',
     title:'Malf. Start Date',
     width:'150px',
-    format:formatGridDate.ddMMYYYY
+    format:formatGridDate.ddMMYYYY,
+    filter:'date'
   },
   {
     show:true,
     field:'start_of_malfunction_time',
     headerCell:customHeaderCell('Malf.,Start time'),
     width:'120px',
-    format:formatGridDate.hhMM
+    format:formatGridDate.hhMM,
+    filterable:false
   },
   {
     show:true,
     field:'end_of_malfunction_date',
     title:'Malf. End Date',
     width:'150px',
-    format:formatGridDate.ddMMYYYY
+    format:formatGridDate.ddMMYYYY,
+    filter:'date'
   },
   {
     show:true,
     field:'end_of_malfunction_time',
     headerCell:customHeaderCell('Malf.,End time'),
     width:'120px',
-    format:formatGridDate.hhMM
+    format:formatGridDate.hhMM,
+    filterable:false
   }, 
   {
     show:true,
@@ -320,7 +336,8 @@ export const notificationColumnProps:IGlobalTypes.ICustomColumn[] = [
     field:'sap_created_on',
     title:'Created On',
     width:'180px',
-    format:formatGridDate.ddMMYYYY
+    format:formatGridDate.ddMMYYYY,
+    filter:'date'
   },
   {
     show:true,
@@ -333,7 +350,8 @@ export const notificationColumnProps:IGlobalTypes.ICustomColumn[] = [
     field:'sap_modified_on',
     title:'Modified On',
     width:'180px',
-    format:formatGridDate.ddMMYYYY
+    format:formatGridDate.ddMMYYYY,
+    filter:'date'
   }
 ]
 export const notificationLoadingRow:INotificationTypes.INotificationGrid = {

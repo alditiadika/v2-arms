@@ -18,7 +18,7 @@ module.exports =  (_, args) => {
   const envReturn = {process:{env:envKeys}}
   if(args.mode === 'development') {
     return {
-      entry: './src/index.tsx',
+      entry: './src/index.js',
       resolve: {
         extensions: ['.tsx', '.ts', '.js', '.json'],
         alias: {
@@ -65,7 +65,8 @@ module.exports =  (_, args) => {
             test: /\.html$/,
             use: [
               {
-                loader: 'html-loader'
+                loader: 'html-loader',
+                options: { minimize: true }
               }
             ]
           },
@@ -76,7 +77,7 @@ module.exports =  (_, args) => {
                 loader: 'svg-url-loader',
                 options: {
                   limit: 10000,
-                  name: 'assets/svg/[name].[hash].[ext]'
+                  name: 'assets/img/[name].[hash].[ext]'
                 },
               },
             ],
@@ -93,7 +94,7 @@ module.exports =  (_, args) => {
             test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
             loader: 'file-loader',
             options: {
-              name: 'assets/font/[name].[ext]',
+              name: 'assets/fonts/[name].[ext]',
             },
           },
           {
@@ -162,7 +163,7 @@ module.exports =  (_, args) => {
     }
   }
   return {
-    entry: './src/index.tsx',
+    entry: './src/index.js',
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.json'],
       alias: {
@@ -192,7 +193,8 @@ module.exports =  (_, args) => {
           test: /\.html$/,
           use: [
             {
-              loader: 'html-loader'
+              loader: 'html-loader',
+              options: { minimize: true }
             }
           ]
         },
@@ -203,7 +205,7 @@ module.exports =  (_, args) => {
               loader: 'svg-url-loader',
               options: {
                 limit: 10000,
-                name: 'assets/svg/[name].[hash].[ext]'
+                name: 'assets/img/[name].[hash].[ext]'
               },
             },
           ],
@@ -227,7 +229,7 @@ module.exports =  (_, args) => {
           test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
           loader: 'file-loader',
           options: {
-            name: 'assets/font/[name].[ext]',
+            name: 'assets/fonts/[name].[ext]',
           },
         },
         {

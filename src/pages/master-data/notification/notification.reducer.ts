@@ -1,3 +1,4 @@
+import { State as KendoDataState } from '@progress/kendo-data-query'
 import IGlobalTypes from 'utils/global-types'
 import INotificationTypes, { notificationTypes } from './notification.types'
 
@@ -14,7 +15,8 @@ const initialState:INotificationTypes.INotificationState = {
     skip:0,
     take:25,
     total:0,
-    sortable:true
+    sortable:true,
+
   }
 }
 const notificationReducer:
@@ -47,6 +49,17 @@ IGlobalTypes.IReducer<INotificationTypes.INotificationState> = (state = initialS
       }
     }
   }
+  case notificationTypes.DATA_STATE_CHANGE:{
+    const { filter, sort }:KendoDataState = action.payload
+    return {
+      ...state,
+      isLoading:true,
+      dataStates:{
+        ...state.dataStates,
+        filter, sort
+      }
+    }
+  }
   case notificationTypes.SET_ERROR:{
     const { errorCode, errorMessage, isError }:INotificationTypes.ISetErrorPayload = action.payload
     return {
@@ -55,6 +68,15 @@ IGlobalTypes.IReducer<INotificationTypes.INotificationState> = (state = initialS
       errorCode,
       errorMessage,
       isLoading:false
+    }
+  }
+  case notificationTypes.ON_CLICK_FILTER:{
+    return {
+      ...state,
+      dataStates:{
+        ...state.dataStates,
+        filterable:!state.dataStates.filterable
+      }
     }
   }
   default:

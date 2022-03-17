@@ -1,5 +1,5 @@
 import { Location as ReactDOMLocation } from 'react-router-dom'
-import { subMenuList } from 'utils/constants'
+import { pathList, subMenuList } from 'utils/constants'
 import IGlobalTypes from 'utils/global-types'
 
 type TMasterDataField = 'notification' | 'workOrder' | 'reservation' |
@@ -88,31 +88,31 @@ export const initialState:IAppTypes.IAppState = {
   navbar:{ fullScreen:false, totalNotification:10, show:true },
   sidebar:{
     status:'hideSubMenu',
-    selectedMenu:{ menu:'dashboard', pathMenu:'/dashboard' },
+    selectedMenu:{ menu:'dashboard', pathMenu:pathList.dashboard.path },
     menu:[
       { 
         menu:'dashboard', title:'Dashboard', selected:true, group:['dashboard'],
-        path:'/dashboard', show:true, subMenu:[] 
+        path:pathList.dashboard.path, show:true, subMenu:[] 
       },
       { 
         menu:'masterData', title:'Master Data', selected:false, group:['sap', 'value_list'], 
-        path:'/master-data', show:true, subMenu:subMenuList.masterDataSubMenu 
+        path:pathList.masterData.path, show:true, subMenu:subMenuList.masterDataSubMenu 
       },
       { 
         menu:'employee', title:'Employee', selected:false, group:['employee'], 
-        path:'/employee', show:true, subMenu:subMenuList.employeeSubMenu 
+        path:pathList.employee.path, show:true, subMenu:subMenuList.employeeSubMenu 
       },
       { 
         menu:'transaction', title:'Transaction', selected:false, group:['transaction', 'inbound'], 
-        path:'/transaction', show:true, subMenu:subMenuList.transactionMenu 
+        path:pathList.transaction.path, show:true, subMenu:subMenuList.transactionMenu 
       },
       { 
         menu:'report', title:'Reports', selected:false, group:['report'], 
-        path:'/report', show:true, subMenu:subMenuList.reportMenu 
+        path:pathList.report.path, show:true, subMenu:subMenuList.reportMenu 
       },
       { 
         menu:'controlPanel', title:'Control Panel', selected:false, group:['control_panel'], 
-        path:'/control-panel', show:true, subMenu:[] 
+        path:pathList.controlPanel.path, show:true, subMenu:[] 
       },
     ]
   }

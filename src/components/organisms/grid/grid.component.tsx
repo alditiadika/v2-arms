@@ -3,8 +3,15 @@ import { Grid, GridColumn as Column } from '@progress/kendo-react-grid'
 import IGlobalTypes from 'utils/global-types'
 import { Card, CardBody } from 'components/molecules/card'
 import styles from './grid.style'
+import { customFilterOperator } from 'utils/constants'
 
-const GridComponent:React.FC<IGlobalTypes.ICustomGrid> = ({ dataGrid, dataStates, style, columns, ...props }) => {
+const GridComponent:React.FC<IGlobalTypes.ICustomGrid> = ({ 
+  dataGrid, dataStates, 
+  style, columns, 
+  showTotal = true,
+  ...props
+}) => {
+  const pageSize = dataStates.take > dataGrid.length ? dataGrid.length : dataStates.take
   return (
     <Fragment>
       <Card style={styles.cardGridStyle}>
@@ -12,7 +19,7 @@ const GridComponent:React.FC<IGlobalTypes.ICustomGrid> = ({ dataGrid, dataStates
           <Grid
             data={dataGrid.slice(dataStates.skip, dataStates.skip + dataStates.take)}
             scrollable={dataStates.scrollable}
-            pageSize={dataStates.take}
+            pageSize={pageSize}
             take={dataStates.take}
             total={dataStates.total}
             skip={dataStates.skip}
@@ -23,6 +30,7 @@ const GridComponent:React.FC<IGlobalTypes.ICustomGrid> = ({ dataGrid, dataStates
             reorderable={dataStates.reorderable}
             filter={dataStates.filter}
             sort={dataStates.sort}
+            filterOperators={customFilterOperator}
             {...props}
           >
             {columns.filter(x => x.show).map((column, index) => (
@@ -32,9 +40,11 @@ const GridComponent:React.FC<IGlobalTypes.ICustomGrid> = ({ dataGrid, dataStates
               />
             ))}
           </Grid>
-          <div style={styles.footerStyle}>
-            {`Total Records: ${dataStates.total}`}
-          </div>
+          {showTotal && (
+            <div style={styles.footerStyle}>
+              {`Total Records: ${dataStates.total}`}
+            </div>
+          )}
         </CardBody>
       </Card>
     </Fragment>

@@ -1,3 +1,4 @@
+import { pathList } from 'utils/constants'
 import IGlobalTypes from 'utils/global-types'
 import IAppTypes from './app.types'
 import { initialState, appTypes } from './app.types'
@@ -10,7 +11,7 @@ const appReducer:IGlobalTypes.IReducer<IAppTypes.IAppState> = (state = initialSt
     const nothingSubMenu = menuFind?.subMenu.length === 0
     const menuSelected:IAppTypes.ISidebarState['selectedMenu'] = { 
       menu,
-      pathMenu:menuFind?.path || '/dashboard',
+      pathMenu:menuFind?.path || pathList.dashboard.path,
       subMenu:subMenu ? undefined : subMenu,
       pathSubMenu:subMenu ? undefined : menuFind?.subMenu[0]?.path
     }
